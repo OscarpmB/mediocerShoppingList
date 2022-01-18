@@ -1,23 +1,24 @@
-from audioop import add
-from cgitb import text
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
 
 items = {}
 
 class MainApp(App):
     global items
-
+    
     def build(self):
-        startPage = GridLayout(cols=1)
+        self.counter = 0 # dummy index for testing item adding and removing
 
-        self.txt = Label(text = "Welcome!")
-        startPage.add_widget(self.txt)
+        startPage = GridLayout(cols=1) # size for base grid
 
-        self.listSegment = GridLayout(cols=3)
-
+        self.toplable = Label(text = "Welcome!")
+        startPage.add_widget(self.toplable)
+        
+        # listSegment holds item list in middle of screen
+        self.listSegment = GridLayout(cols=1)
         startPage.add_widget(self.listSegment)
 
         # button to add items to list segment
@@ -26,16 +27,34 @@ class MainApp(App):
         startPage.add_widget(addBtn)
 
         return startPage
-    def addItem(self, instance):
-        items["carrot"] = 2
-        item = Label(text="carrot")
-        quantity = Label(text="2")
-        self.listSegment.add_widget(item)
-        self.listSegment.add_widget(quantity)
 
-        #Delete button
+
+    def addItem(self, instance):
+        i = 'carrot' + str(self.counter)
+        q = self.counter
+        self.counter = self.counter + 1
+
+        row = BoxLayout()
+        items[i] = q
+        item = Label(text=i)
+        quantity = Label(text=str(q))
+        row.add_widget(item)
+        row.add_widget(quantity)
+        
+        # Delete button
         remove = Button(text = "remove")
-        self.listSegment.add_widget(remove)
+        #remove.bind(on_release = deleteItem())
+        row.add_widget(remove)
+
+
+        self.listSegment.add_widget(row)
+
+        print(items)
         return
+
+    def deleteItem(self, instance):
+        self.listSegment.remove_widget(self)
+        
+
 if __name__ == '__main__':
     MainApp().run()
