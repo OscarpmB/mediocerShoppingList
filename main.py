@@ -3,8 +3,12 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
-
+from kivy.uix.popup import Popup
+from kivy.uix.floatlayout import FloatLayout
 items = {}
+
+class p(FloatLayout):
+    pass
 
 class MainApp(App):
     global items
@@ -12,24 +16,27 @@ class MainApp(App):
     def build(self):
         self.counter = 0 # dummy index for testing item adding and removing
 
-        startPage = GridLayout(cols=1) # size for base grid
+        self.startPage = GridLayout(cols=1) # size for base grid
 
         self.toplable = Label(text = "Welcome!")
-        startPage.add_widget(self.toplable)
+        self.startPage.add_widget(self.toplable)
         
         # listSegment holds item list in middle of screen
         self.listSegment = GridLayout(cols=1)
-        startPage.add_widget(self.listSegment)
+        self.startPage.add_widget(self.listSegment)
 
         # button to add items to list segment
         addBtn = Button(text="Add item")
         addBtn.bind(on_release = self.addItem)
-        startPage.add_widget(addBtn)
+        self.startPage.add_widget(addBtn)
 
-        return startPage
+        return self.startPage
 
 
     def addItem(self, instance):
+        
+        display_popup()
+
         i = 'carrot' + str(self.counter)
         q = self.counter
         self.counter = self.counter + 1
@@ -43,7 +50,7 @@ class MainApp(App):
         
         # Delete button
         remove = Button(text = "remove")
-        #remove.bind(on_release = deleteItem())
+        
         row.add_widget(remove)
 
 
@@ -54,7 +61,15 @@ class MainApp(App):
 
     def deleteItem(self, instance):
         self.listSegment.remove_widget(self)
-        
+
+def display_popup():
+    show = p()
+    popup = Popup(title='Add item', content=show, size_hint=(None, None), size=(400,400))
+    popup.open()
+         
+
+
+
 
 if __name__ == '__main__':
     MainApp().run()
