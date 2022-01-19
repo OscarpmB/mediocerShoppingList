@@ -1,10 +1,13 @@
 <p>:
     btn: btn
+    item: item
+    quantity: quantity
     Label:
         text: "Item: "
         size_hint: 0.5, 0.2
         pos_hint: {'x':0.0, 'y': 0.8}
     TextInput:
+        id: item
         multiline: False
         size_hint: 0.5,0.2
         pos_hint: {'x': 0.5, 'y':0.8}
@@ -13,6 +16,7 @@
         size_hint: 0.5, 0.2
         pos_hint: {'x':0.0, 'y': 0.6}
     TextInput:
+        id: quantity
         multiline: False
         size_hint: 0.5,0.2
         pos_hint: {'x': 0.5, 'y':0.6}
